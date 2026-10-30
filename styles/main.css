@@ -1,0 +1,144 @@
+
+/* ==========================================================================
+   1. CSS VARIABLES (Bảng màu Tâm Linh Á Đông: Deep Blue, Mystic Purple, Gold)
+   ========================================================================== */
+:root {
+  /* Màu nền chủ đạo */
+  --bg-deep-blue: #070913;
+  --bg-mystic-purple: #161129;
+  --bg-surface: rgba(22, 17, 41, 0.78);
+  --bg-surface-elevated: rgba(34, 26, 62, 0.88);
+
+  /* Điểm nhấn Vàng Kim (Gold) */
+  --gold-primary: #d4af37;
+  --gold-light: #f3e5ab;
+  --gold-dark: #996515;
+  --gold-glow: rgba(212, 175, 55, 0.35);
+
+  /* Màu sắc trạng thái Quẻ / Ngũ Hành */
+  --auspicious-red: #c93b2b;     /* Đại Cát / Hành Hỏa */
+  --jade-green: #2e8b57;         /* Bình An / Hành Mộc */
+  --water-cyan: #38bdf8;         /* Hành Thủy */
+  --earth-amber: #d97706;        /* Hành Thổ */
+
+  /* Màu chữ (Typography) */
+  --text-main: #f4f0ea;
+  --text-muted: #a69fb8;
+  --text-gold: #e5c158;
+
+  /* Font chữ */
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Viền & Đổ bóng */
+  --border-gold: 1px solid rgba(212, 175, 55, 0.35);
+  --border-gold-bright: 1px solid rgba(243, 229, 171, 0.75);
+  --shadow-mystic: 0 12px 35px rgba(0, 0, 0, 0.75), 0 0 20px rgba(212, 175, 55, 0.12);
+  
+  /* Chuyển cảnh */
+  --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ==========================================================================
+   2. RESET & BASE STYLES
+   ========================================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100vh;
+  background: radial-gradient(circle at 50% 20%, var(--bg-mystic-purple) 0%, var(--bg-deep-blue) 85%);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Lớp nền Canvas hạt lấp lánh cố định phía sau */
+#particle-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none; /* Để người dùng vẫn click xuyên qua xuống UI */
+}
+
+/* Đảm bảo nội dung ứng dụng nổi lên trên nền Canvas */
+.app-container {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==========================================================================
+   3. TYPOGRAPHY & COMMON UTILITIES
+   ========================================================================== */
+h1, h2, h3, h4, .brand-title, .card-title, .panel-title {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  color: var(--gold-light);
+  letter-spacing: 0.04em;
+  text-shadow: 0 2px 10px rgba(212, 175, 55, 0.3);
+}
+
+.panel-title {
+  font-size: 1.75rem;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.instruction-text {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  text-align: center;
+  font-style: italic;
+  margin-bottom: 1.25rem;
+}
+
+button, input, select {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  outline: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* Các class tiện ích ẩn/hiện */
+.hidden {
+  display: none !important;
+}
+
+/* Tùy chỉnh thanh cuộn (Scrollbar) */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-deep-blue);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--gold-dark);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gold-primary);
+}

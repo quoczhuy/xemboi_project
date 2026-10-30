@@ -1,0 +1,397 @@
+
+/* ==========================================================================
+   1. NÚT ĐIỀU HƯỚNG & NÚT HÀNH ĐỘNG (BUTTONS)
+   ========================================================================== */
+.nav-btn {
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  color: var(--text-muted);
+  font-weight: 600;
+  transition: var(--transition-fast);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nav-btn:hover {
+  color: var(--gold-light);
+  background: rgba(212, 175, 55, 0.08);
+}
+
+.nav-btn.active {
+  color: var(--bg-deep-blue);
+  background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold-primary) 100%);
+  box-shadow: 0 0 15px var(--gold-glow);
+}
+
+.gold-btn {
+  display: inline-block;
+  padding: 0.85rem 2.25rem;
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
+  color: var(--bg-deep-blue);
+  background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold-primary) 50%, var(--gold-dark) 100%);
+  border-radius: 50px;
+  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.35);
+  transition: var(--transition-fast);
+}
+
+.gold-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(212, 175, 55, 0.55);
+  filter: brightness(1.08);
+}
+
+.secondary-btn {
+  margin-top: 1.25rem;
+  padding: 0.55rem 1.4rem;
+  border: var(--border-gold);
+  border-radius: 6px;
+  color: var(--gold-light);
+  transition: var(--transition-fast);
+}
+
+.secondary-btn:hover {
+  background: rgba(212, 175, 55, 0.15);
+  border-color: var(--gold-light);
+}
+
+.icon-btn {
+  font-size: 1.35rem;
+  padding: 0.5rem;
+  border-radius: 50%;
+  border: var(--border-gold);
+  background: rgba(255, 255, 255, 0.03);
+  transition: var(--transition-fast);
+}
+
+.icon-btn:hover {
+  background: rgba(212, 175, 55, 0.18);
+}
+
+/* ==========================================================================
+   2. NHÂN VẬT THẦY BÓI & CHAT BUBBLE
+   ========================================================================== */
+.npc-avatar-wrapper {
+  position: relative;
+  width: 130px;
+  height: 130px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+  flex-shrink: 0;
+}
+
+.npc-aura {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.35) 0%, transparent 70%);
+  border: 1px dashed rgba(212, 175, 55, 0.45);
+}
+
+.npc-character {
+  font-size: 4.2rem;
+  z-index: 1;
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.6));
+}
+
+.npc-status-badge {
+  position: absolute;
+  bottom: -6px;
+  background: var(--bg-deep-blue);
+  border: var(--border-gold);
+  color: var(--gold-light);
+  font-size: 0.75rem;
+  padding: 0.15rem 0.65rem;
+  border-radius: 20px;
+  z-index: 2;
+  white-space: nowrap;
+}
+
+.dialogue-box {
+  width: 100%;
+  background: rgba(10, 8, 20, 0.85);
+  border: var(--border-gold);
+  border-radius: 12px;
+  padding: 1rem 1.15rem;
+  position: relative;
+  min-height: 145px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.dialogue-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+  padding-bottom: 0.4rem;
+  margin-bottom: 0.6rem;
+}
+
+.npc-name {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  color: var(--gold-primary);
+  font-size: 0.95rem;
+}
+
+.dialogue-indicator {
+  color: var(--gold-light);
+  font-size: 0.85rem;
+}
+
+.dialogue-content {
+  font-size: 0.92rem;
+  color: var(--text-main);
+  line-height: 1.55;
+  flex: 1;
+}
+
+.skip-btn {
+  align-self: flex-end;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 0.5rem;
+  transition: color 0.2s;
+}
+
+.skip-btn:hover {
+  color: var(--gold-light);
+}
+
+/* ==========================================================================
+   3. ỐNG XĂM & THẺ QUẺ XĂM
+   ========================================================================== */
+.fortune-altar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem 0;
+}
+
+.tube-wrapper {
+  position: relative;
+  width: 120px;
+  height: 210px;
+  cursor: pointer;
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+/* Các thanh thẻ tre nhô lên từ ống xăm */
+.fortune-sticks {
+  display: flex;
+  gap: 8px;
+  margin-bottom: -15px;
+  z-index: 1;
+}
+
+.stick {
+  width: 12px;
+  height: 75px;
+  background: linear-gradient(to bottom, var(--auspicious-red) 22%, #e6c280 22%, #c89d54 100%);
+  border-radius: 4px 4px 0 0;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+}
+
+.stick:nth-child(1) { transform: rotate(-8deg) translateY(6px); }
+.stick:nth-child(2) { transform: translateY(-4px); }
+.stick:nth-child(3) { transform: rotate(9deg) translateY(4px); }
+
+/* Thân ống xăm bằng gỗ sơn mài khắc chữ vàng */
+.tube-body {
+  width: 105px;
+  height: 155px;
+  background: linear-gradient(90deg, #3a1c0d 0%, #6e351c 48%, #2e1509 100%);
+  border: 2px solid var(--gold-primary);
+  border-radius: 10px 10px 18px 18px;
+  box-shadow: inset 0 0 18px rgba(0,0,0,0.8), 0 12px 25px rgba(0,0,0,0.65);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+}
+
+.tube-label {
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--gold-light);
+  letter-spacing: 0.15em;
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  padding: 0.4rem 0.25rem;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+/* Chi tiết Thẻ Quẻ Xăm */
+.result-overlay {
+  max-width: 460px;
+  margin: 1rem auto 0;
+}
+
+.card-rank {
+  display: inline-block;
+  padding: 0.25rem 0.9rem;
+  background: var(--auspicious-red);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.75rem;
+}
+
+.card-divider {
+  color: var(--gold-primary);
+  margin: 0.85rem 0;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.card-poem {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.08rem;
+  color: var(--gold-light);
+  background: rgba(0, 0, 0, 0.3);
+  padding: 1rem;
+  border-radius: 8px;
+  border-left: 3px solid var(--gold-primary);
+  margin-bottom: 1rem;
+}
+
+.card-interpretation h4 {
+  font-size: 1rem;
+  margin-bottom: 0.35rem;
+}
+
+.card-interpretation p {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   4. FORM XEM TUỔI & Ô CUNG TỬ VI
+   ========================================================================== */
+.mystic-form-container {
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.mystic-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+  margin-top: 1.25rem;
+  margin-bottom: 1.75rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.form-group label {
+  font-size: 0.88rem;
+  color: var(--gold-light);
+  font-weight: 600;
+}
+
+.form-group input,
+.form-group select {
+  padding: 0.75rem 1rem;
+  background: rgba(10, 8, 20, 0.75);
+  border: var(--border-gold);
+  border-radius: 8px;
+  color: var(--text-main);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: var(--gold-light);
+  box-shadow: 0 0 12px var(--gold-glow);
+}
+
+.form-group select option {
+  background: var(--bg-deep-blue);
+  color: var(--text-main);
+}
+
+/* Ô Cung trên bàn Tử Vi */
+.palace-cell {
+  background: rgba(14, 11, 28, 0.8);
+  border: var(--border-gold);
+  border-radius: 8px;
+  padding: 0.75rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  font-family: var(--font-serif);
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.palace-cell span {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-top: 0.25rem;
+}
+
+.palace-cell:hover {
+  border-color: var(--gold-light);
+  transform: translateY(-2px);
+  background: rgba(212, 175, 55, 0.1);
+}
+
+.palace-cell.active-palace {
+  background: linear-gradient(145deg, rgba(212, 175, 55, 0.25) 0%, rgba(22, 17, 41, 0.95) 100%);
+  border: var(--border-gold-bright);
+  color: var(--gold-light);
+  box-shadow: 0 0 18px var(--gold-glow);
+}
+/* ===== Nâng cấp: chủ đề xăm, thầy bói SVG, thông tin xem tuổi ===== */
+.npc-avatar-wrapper { width: 170px; height: 170px; }
+.teller { width: 150px; height: 150px; overflow: visible; }
+.topic-select {
+  margin-bottom: 1rem; padding: 0.6rem 1rem; background: rgba(10, 8, 20, 0.75);
+  border: var(--border-gold); border-radius: 8px; color: var(--text-main); cursor: pointer;
+}
+.topic-select option { background: var(--bg-deep-blue); }
+.card-rank[data-type="neutral"] { background: var(--jade-green); }
+.card-rank[data-type="ominous"] { background: #5b4a8a; }
+.card-topic { margin-top: 0.75rem; font-size: 0.92rem; color: var(--gold-light); border-top: 1px dashed rgba(212,175,55,.3); padding-top: 0.65rem; }
+.info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; text-align: left; margin-top: 0.5rem; }
+.info-grid div { background: rgba(0,0,0,.3); border-radius: 8px; padding: 0.55rem 0.75rem; font-size: 0.88rem; color: var(--text-main); }
+.info-grid b { display: block; color: var(--gold-primary); font-size: 0.78rem; font-weight: 600; margin-bottom: 0.15rem; }
+.info-grid .wide { grid-column: 1 / -1; }
+.age-note { margin-top: 0.8rem; font-size: 0.78rem; color: var(--text-muted); font-style: italic; }
+@media (max-width: 640px) { .info-grid { grid-template-columns: 1fr; } }

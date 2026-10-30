@@ -1,0 +1,168 @@
+/* ==========================================================================
+   1. HEADER & NAVIGATION BAR
+   ========================================================================== */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.75rem;
+  background: var(--bg-surface);
+  border: var(--border-gold);
+  border-radius: 14px;
+  backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-mystic);
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.brand-symbol {
+  font-size: 2rem;
+  color: var(--gold-primary);
+  text-shadow: 0 0 12px var(--gold-glow);
+}
+
+.brand-title {
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.main-nav {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+/* ==========================================================================
+   2. KHU VỰC SÂN KHẤU CHÍNH (ALTAR STAGE: NPC + WORKSPACE)
+   ========================================================================== */
+.altar-stage {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 2rem;
+  flex: 1;
+  align-items: start;
+}
+
+/* Cột trái: Nhân vật Thầy Bói & Khung hội thoại */
+.npc-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--bg-surface);
+  border: var(--border-gold);
+  border-radius: 16px;
+  padding: 1.75rem 1.25rem;
+  backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-mystic);
+  position: sticky;
+  top: 1.5rem;
+}
+
+/* Cột phải: Khu vực chức năng thay đổi theo Tab */
+.workspace-panels {
+  background: var(--bg-surface);
+  border: var(--border-gold);
+  border-radius: 16px;
+  padding: 2rem;
+  min-height: 540px;
+  backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-mystic);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+
+.tab-panel {
+  display: none;
+  width: 100%;
+}
+
+.tab-panel.active {
+  display: block;
+}
+
+/* ==========================================================================
+   3. LƯỚI LÁ SỐ TỬ VI 12 CUNG (CHUẨN ĐỊA BÀN 4x4)
+   ========================================================================== */
+.tuvi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, minmax(105px, auto));
+  gap: 10px;
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+/* Định vị chính xác 12 Địa Chi xung quanh viền ngoài bảng 4x4 */
+.palace-cell[data-palace="Ty_1"] { grid-column: 1; grid-row: 1; }
+.palace-cell[data-palace="Ngo"]  { grid-column: 2; grid-row: 1; }
+.palace-cell[data-palace="Mui"]  { grid-column: 3; grid-row: 1; }
+.palace-cell[data-palace="Than"] { grid-column: 4; grid-row: 1; }
+
+.palace-cell[data-palace="Thin"] { grid-column: 1; grid-row: 2; }
+.palace-cell[data-palace="Dau"]  { grid-column: 4; grid-row: 2; }
+
+.palace-cell[data-palace="Mao"]  { grid-column: 1; grid-row: 3; }
+.palace-cell[data-palace="Tuat"] { grid-column: 4; grid-row: 3; }
+
+.palace-cell[data-palace="Dan"]  { grid-column: 1; grid-row: 4; }
+.palace-cell[data-palace="Suu"]  { grid-column: 2; grid-row: 4; }
+.palace-cell[data-palace="Ti"]   { grid-column: 3; grid-row: 4; }
+.palace-cell[data-palace="Hoi"]  { grid-column: 4; grid-row: 4; }
+
+/* Thiên Bàn nằm chính giữa, chiếm 2 cột x 2 hàng */
+.thien-ban {
+  grid-column: 2 / 4;
+  grid-row: 2 / 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1.25rem;
+  background: radial-gradient(circle, rgba(34, 26, 62, 0.95) 0%, rgba(12, 9, 24, 0.95) 100%);
+  border: var(--border-gold-bright);
+  border-radius: 10px;
+  box-shadow: inset 0 0 25px rgba(212, 175, 55, 0.15);
+}
+
+/* ==========================================================================
+   4. RESPONSIVE DESIGN (TABLET & MOBILE)
+   ========================================================================== */
+@media (max-width: 920px) {
+  .altar-stage {
+    grid-template-columns: 1fr;
+  }
+
+  .npc-container {
+    position: static;
+    flex-direction: row;
+    gap: 1.5rem;
+    text-align: left;
+  }
+}
+
+@media (max-width: 640px) {
+  .app-header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .npc-container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .tuvi-grid {
+    gap: 6px;
+    grid-template-rows: repeat(4, minmax(85px, auto));
+  }
+}

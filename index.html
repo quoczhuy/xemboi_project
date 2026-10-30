@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Huyền Vi Các - Tâm Linh Á Đông</title>
+  
+  <!-- Google Fonts: Playfair Display (Serif cổ điển) & Be Vietnam Pro (Sans-serif dễ đọc) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,600;1,400&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+
+  <!-- Hệ thống Stylesheets theo kiến trúc Module -->
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/layout.css">
+  <link rel="stylesheet" href="styles/components.css">
+  <link rel="stylesheet" href="styles/animations.css">
+</head>
+<body>
+  <!-- Lớp nền Canvas hiển thị hạt linh khí (Particles) -->
+  <canvas id="particle-canvas"></canvas>
+
+  <!-- Giao diện chính -->
+  <div class="app-container">
+    
+    <!-- Header & Thanh điều hướng -->
+    <header class="app-header">
+      <div class="brand">
+        <span class="brand-symbol">☯</span>
+        <h1 class="brand-title">Huyền Vi Các</h1>
+      </div>
+      
+      <nav class="main-nav" aria-label="Điều hướng chính">
+        <button class="nav-btn active" data-tab="gieo-que">
+          <span class="icon">🎋</span> Xin Xăm
+        </button>
+        <button class="nav-btn" data-tab="xem-tuoi">
+          <span class="icon">📜</span> Xem Tuổi
+        </button>
+        <button class="nav-btn" data-tab="tu-vi">
+          <span class="icon">🧭</span> Lá Số Tử Vi
+        </button>
+      </nav>
+
+      <div class="audio-controls">
+        <button id="btn-mute" class="icon-btn" title="Bật/Tắt âm thanh">🔊</button>
+      </div>
+    </header>
+
+    <!-- Khu vực Bàn Làm Lễ & Tương tác trung tâm -->
+    <main class="altar-stage">
+      
+      <!-- Khu vực Nhân vật Thầy Bói (Interactive NPC) -->
+      <section class="npc-container">
+        <div class="npc-avatar-wrapper" data-mood="neutral" id="npc-avatar">
+          <!-- Thay bằng đường dẫn ảnh thật khi ghép assets, hiện dùng SVG minh họa -->
+          <div class="npc-aura"></div>
+          <div class="npc-character" role="img" aria-label="Thầy Bói">
+          <svg class="teller" id="npc-sprite" viewBox="0 0 120 130" role="img" aria-label="Thầy Bói">
+            <path d="M8 130 Q14 82 60 78 Q106 82 112 130Z" fill="#3b2a6b" stroke="#d4af37" stroke-width="1.5"/>
+            <path d="M60 78 L46 130 M60 78 L74 130" stroke="#d4af37" stroke-width="1.5" fill="none"/>
+            <circle cx="60" cy="102" r="7" fill="none" stroke="#d4af37" stroke-width="1.5"/>
+            <path d="M60 95 A7 7 0 0 1 60 109 A3.5 3.5 0 0 1 60 102 A3.5 3.5 0 0 0 60 95Z" fill="#d4af37"/>
+            <circle cx="60" cy="52" r="26" fill="#f1c9a0"/>
+            <path d="M32 46 Q34 14 60 12 Q86 14 88 46 Q76 34 60 34 Q44 34 32 46Z" fill="#1d1538" stroke="#d4af37" stroke-width="1.5"/>
+            <rect x="30" y="40" width="60" height="6" rx="3" fill="#d4af37"/>
+            <path d="M36 60 Q38 98 60 104 Q82 98 84 60 Q72 74 60 72 Q48 74 36 60Z" fill="#f5f2ec"/>
+            <g class="brows" stroke="#d9d4cc" stroke-width="3" stroke-linecap="round">
+              <line class="brow-l" x1="45" y1="48" x2="55" y2="47"/><line class="brow-r" x1="65" y1="47" x2="75" y2="48"/>
+            </g>
+            <ellipse class="eye" cx="50" cy="55" rx="2.8" ry="3.2" fill="#1d1538"/>
+            <ellipse class="eye" cx="70" cy="55" rx="2.8" ry="3.2" fill="#1d1538"/>
+            <path d="M58 64 Q60 67 62 64" stroke="#c99a70" stroke-width="2" fill="none"/>
+            <ellipse class="mouth" cx="60" cy="77" rx="5" ry="1.6" fill="#7a2b2b"/>
+            <circle class="orb" cx="94" cy="112" r="13" fill="#38bdf8" fill-opacity=".55" stroke="#bfe9ff" stroke-width="1.5"/>
+          </svg>
+          </div>
+          <span class="npc-status-badge" id="npc-mood-label">Tĩnh Tâm</span>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-header">
+            <span class="npc-name">Tiên Sinh Huyền Cơ</span>
+            <span class="dialogue-indicator" id="typing-indicator">✦</span>
+          </div>
+          <p id="npc-text" class="dialogue-content"></p>
+          <button id="btn-skip-dialogue" class="skip-btn" title="Bỏ qua hiệu ứng chữ">Bỏ qua ⏭</button>
+        </div>
+      </section>
+
+      <!-- Khu vực Chức năng (Thay đổi theo Tab) -->
+      <section class="workspace-panels">
+        
+        <!-- TAB 1: XEM QUẺ BÓI (GIEO XĂM) -->
+        <div id="panel-gieo-que" class="tab-panel active">
+          <div class="fortune-altar">
+            <div class="tube-wrapper" id="fortune-tube" title="Nhấn để lắc ống xăm">
+              <div class="fortune-sticks">
+                <span class="stick"></span>
+                <span class="stick"></span>
+                <span class="stick"></span>
+              </div>
+              <div class="tube-body">
+                <span class="tube-label">Vạn Sự Tùy Duyên</span>
+              </div>
+            </div>
+            <select id="input-topic" class="topic-select" aria-label="Chủ đề muốn hỏi">
+              <option value="tong">Hỏi chuyện: Tổng quát</option>
+              <option value="tinhduyen">Hỏi chuyện: Tình duyên</option>
+              <option value="sunghiep">Hỏi chuyện: Sự nghiệp</option>
+              <option value="taiLoc">Hỏi chuyện: Tài lộc</option>
+              <option value="suckhoe">Hỏi chuyện: Sức khỏe</option>
+              <option value="hoctap">Hỏi chuyện: Học tập thi cử</option>
+            </select>
+            <p class="instruction-text">Thành tâm niệm điều muốn hỏi và nhấn vào ống xăm</p>
+            <button id="btn-shake-tube" class="action-btn gold-btn">Gieo Quẻ</button>
+          </div>
+
+          <!-- Thẻ Quẻ Xăm (Áp dụng hiệu ứng 3D Tilt) -->
+          <div id="fortune-result-container" class="result-overlay hidden">
+            <div class="tilt-card" id="fortune-card">
+              <div class="tilt-card-inner">
+                <div class="tilt-glare"></div>
+                <div class="card-border">
+                  <span class="card-rank" id="card-rank">Thượng Thượng</span>
+                  <h2 class="card-title" id="card-title">Quẻ Số 01: Thiên Khai Cát Vận</h2>
+                  <div class="card-divider">❖ ── ❖ ── ❖</div>
+                  <p class="card-poem" id="card-poem">
+                    "Rồng gặp mây lành thỏa chí bay,<br>
+                    Công danh sự nghiệp rạng từ đây.<br>
+                    Muôn việc mưu cầu đều thuận lợi,<br>
+                    Phúc lộc dồi dào tựa cỏ cây."
+                  </p>
+                  <div class="card-interpretation">
+                    <h4>Lời Bàn:</h4>
+                    <p id="card-meaning">Mọi sự hanh thông, mưu sự tất thành. Hãy giữ tâm sáng và tiến bước.</p>
+                    <p id="card-topic" class="card-topic"></p>
+                  </div>
+                  <button id="btn-close-card" class="secondary-btn">Rút Quẻ Khác</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 2: XEM TUỔI (CAN CHI & NGŨ HÀNH) -->
+        <div id="panel-xem-tuoi" class="tab-panel">
+          <div class="mystic-form-container">
+            <h2 class="panel-title">Luận Giải Niên Mệnh</h2>
+            <form id="form-xem-tuoi" class="mystic-form">
+              <div class="form-group">
+                <label for="input-name">Họ và Tên (Tùy chọn)</label>
+                <input type="text" id="input-name" placeholder="Nhập danh xưng của bạn...">
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="input-dob">Ngày Tháng Năm Sinh (Dương lịch)</label>
+                  <input type="date" id="input-dob" required>
+                </div>
+                <div class="form-group">
+                  <label for="input-gender">Giới Tính</label>
+                  <select id="input-gender">
+                    <option value="nam">Nam Mạng (Càn)</option>
+                    <option value="nu">Nữ Mạng (Khôn)</option>
+                  </select>
+                </div>
+              </div>
+              <button type="submit" class="action-btn gold-btn">Khởi Quẻ Niên Mệnh</button>
+            </form>
+
+            <!-- Kết quả Xem Tuổi -->
+            <div id="age-result" class="age-result-card tilt-card hidden">
+              <div class="tilt-card-inner">
+                <div class="tilt-glare"></div>
+                <div id="age-result-content">
+                  <!-- Nội dung sẽ được render từ divination.js -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 3: LÁ SỐ TỬ VI (BÁT QUÁI ĐỒ) -->
+        <div id="panel-tu-vi" class="tab-panel">
+          <div class="tuvi-board-wrapper">
+            <h2 class="panel-title">Sa Bàn Thập Nhị Cung</h2>
+            <p class="instruction-text">Chọn một cung trên sa bàn để nghe Tiên Sinh luận giải</p>
+            
+            <!-- Lưới Tử Vi 12 Cung + Thiên Bàn ở giữa -->
+            <div class="tuvi-grid" id="tuvi-grid">
+              <div class="palace-cell" data-palace="Ty_1">Tỵ<br><span>Điền Trạch</span></div>
+              <div class="palace-cell" data-palace="Ngo">Ngọ<br><span>Quan Lộc</span></div>
+              <div class="palace-cell" data-palace="Mui">Mùi<br><span>Nô Bộc</span></div>
+              <div class="palace-cell" data-palace="Than">Thân<br><span>Thiên Di</span></div>
+              
+              <div class="palace-cell" data-palace="Thin">Thìn<br><span>Phúc Đức</span></div>
+              
+              <!-- Thiên Bàn trung tâm (Chiếm 2x2 ô ở giữa) -->
+              <div class="thien-ban">
+                <div class="bagua-spinner">☯</div>
+                <h3 id="selected-palace-title">Thiên Bàn</h3>
+                <p id="selected-palace-desc">Vạn vật quy tâm. Nhấn vào từng cung xung quanh để xem chi tiết.</p>
+              </div>
+
+              <div class="palace-cell" data-palace="Dau">Dậu<br><span>Tật Ách</span></div>
+              <div class="palace-cell" data-palace="Mao">Mão<br><span>Phụ Mẫu</span></div>
+              <div class="palace-cell" data-palace="Tuat">Tuất<br><span>Tài Bạch</span></div>
+              
+              <div class="palace-cell active-palace" data-palace="Dan">Dần<br><span>Mệnh Cung</span></div>
+              <div class="palace-cell" data-palace="Suu">Sửu<br><span>Huynh Đệ</span></div>
+              <div class="palace-cell" data-palace="Ti">Tý<br><span>Phu Thê</span></div>
+              <div class="palace-cell" data-palace="Hoi">Hợi<br><span>Tử Tức</span></div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+    </main>
+  </div>
+
+  <!-- Khởi chạy JavaScript theo chuẩn ES6 Module -->
+  <script type="module" src="scripts/main.js"></script>
+</body>
+</html>

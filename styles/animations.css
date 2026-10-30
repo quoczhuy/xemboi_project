@@ -1,0 +1,176 @@
+/* ==========================================================================
+   1. 3D TILT CARD EFFECT (Dành cho Thẻ Xăm & Thẻ Kết Quả)
+   ========================================================================== */
+.tilt-card {
+  perspective: 1200px;
+  transform-style: preserve-3d;
+}
+
+.tilt-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  /* Sử dụng biến CSS được cập nhật liên tục từ JS khi di chuột */
+  transform: rotateX(var(--rotateX, 0deg)) rotateY(var(--rotateY, 0deg)) scale3d(var(--scale, 1), var(--scale, 1), 1);
+  transition: transform 0.12s ease-out, box-shadow 0.3s ease;
+  transform-style: preserve-3d;
+  border-radius: 12px;
+  background: linear-gradient(145deg, #1f1738 0%, #0e0b1a 100%);
+  border: var(--border-gold);
+  box-shadow: var(--shadow-mystic);
+  overflow: hidden;
+}
+
+.tilt-card:hover .tilt-card-inner {
+  border: var(--border-gold-bright);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85), 0 0 25px var(--gold-glow);
+}
+
+/* Lớp ánh kim lấp lánh chạy theo góc nghiêng của chuột */
+.tilt-glare {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  background: radial-gradient(
+    circle at var(--glareX, 50%) var(--glareY, 50%),
+    rgba(243, 229, 171, 0.22) 0%,
+    rgba(212, 175, 55, 0.05) 40%,
+    transparent 70%
+  );
+  opacity: var(--glareOpacity, 0);
+  transition: opacity 0.25s ease;
+}
+
+/* Nội dung bên trong nổi 3D nhẹ so với nền thẻ */
+.card-border {
+  transform: translateZ(30px);
+  padding: 2rem;
+  border: 1px dashed rgba(212, 175, 55, 0.4);
+  margin: 12px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+/* ==========================================================================
+   2. ANIMATION LẮC ỐNG XĂM & RÚT QUẺ
+   ========================================================================== */
+@keyframes shakeTube {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  15% { transform: translate(-8px, -6px) rotate(-7deg); }
+  30% { transform: translate(8px, 4px) rotate(7deg); }
+  45% { transform: translate(-6px, -8px) rotate(-5deg); }
+  60% { transform: translate(6px, 4px) rotate(5deg); }
+  75% { transform: translate(-4px, -3px) rotate(-3deg); }
+  90% { transform: translate(4px, 2px) rotate(3deg); }
+}
+
+@keyframes stickEject {
+  0% { transform: translateY(0) scale(1); opacity: 1; }
+  50% { transform: translateY(-45px) rotate(8deg) scale(1.1); opacity: 1; }
+  100% { transform: translateY(-85px) rotate(12deg) scale(1.15); opacity: 0; }
+}
+
+.is-shaking {
+  animation: shakeTube 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) infinite;
+}
+
+.is-shaking .stick:nth-child(2) {
+  animation: stickEject 0.9s ease-in-out forwards;
+}
+
+/* ==========================================================================
+   3. HIỆU ỨNG NHÂN VẬT THẦY BÓI (NPC MOOD & FLOATING)
+   ========================================================================== */
+@keyframes floatIdle {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-7px); }
+}
+
+@keyframes auraPulse {
+  0%, 100% { transform: scale(1); opacity: 0.45; }
+  50% { transform: scale(1.15); opacity: 0.8; }
+}
+
+@keyframes rotateBagua {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.npc-character {
+  animation: floatIdle 3.5s ease-in-out infinite;
+  transition: filter 0.4s ease, transform 0.4s ease;
+}
+
+.npc-aura {
+  animation: auraPulse 4s ease-in-out infinite;
+}
+
+/* Biến đổi hào quang Thầy Bói theo kết quả quẻ (Tốt / Xấu / Đang suy ngẫm) */
+.npc-avatar-wrapper[data-mood="auspicious"] .npc-aura {
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.65) 0%, transparent 70%);
+  box-shadow: 0 0 35px var(--gold-primary);
+}
+
+.npc-avatar-wrapper[data-mood="ominous"] .npc-aura {
+  background: radial-gradient(circle, rgba(201, 59, 43, 0.55) 0%, transparent 70%);
+  box-shadow: 0 0 35px var(--auspicious-red);
+}
+
+.npc-avatar-wrapper[data-mood="thinking"] .npc-character {
+  animation: floatIdle 1.2s ease-in-out infinite;
+  filter: drop-shadow(0 0 12px var(--water-cyan));
+}
+
+/* Hiệu ứng xoay Bát Quái ở bàn Tử Vi */
+.bagua-spinner {
+  display: inline-block;
+  font-size: 2.5rem;
+  color: var(--gold-primary);
+  animation: rotateBagua 18s linear infinite;
+}
+
+/* ==========================================================================
+   4. HIỆU ỨNG CHUYỂN TAB & CON TRỎ TYPING
+   ========================================================================== */
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(15px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.tab-panel.active,
+.result-overlay:not(.hidden),
+.age-result-card:not(.hidden) {
+  animation: fadeSlideUp 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Dấu nháy ở cuối câu thoại khi Thầy Bói đang nói */
+@keyframes blinkCursor {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.dialogue-content.is-typing::after {
+  content: ' ✦';
+  color: var(--gold-primary);
+  animation: blinkCursor 0.7s infinite;
+}
+/* ===== Thầy bói SVG: chớp mắt, nói chuyện, biểu cảm ===== */
+.teller .eye, .teller .mouth, .teller .brow-l, .teller .brow-r { transform-box: fill-box; transform-origin: center; transition: transform .3s; }
+.teller .eye { animation: blink 4.5s infinite; }
+@keyframes blink { 0%, 94%, 100% { transform: scaleY(1); } 97% { transform: scaleY(0.1); } }
+.talking .teller .mouth { animation: talk .24s ease-in-out infinite alternate; }
+@keyframes talk { to { transform: scaleY(3.2) scaleX(.85); } }
+.teller .orb { opacity: 0; transition: opacity .4s; }
+[data-mood="thinking"] .teller .orb { opacity: 1; animation: auraPulse 1.2s infinite; transform-origin: 94px 112px; }
+[data-mood="auspicious"] .teller .eye { transform: scaleY(0.35); }
+[data-mood="auspicious"] .teller .mouth { transform: scaleX(1.5) scaleY(1.6); }
+[data-mood="ominous"] .teller .brow-l { transform: rotate(14deg); }
+[data-mood="ominous"] .teller .brow-r { transform: rotate(-14deg); }
+@media (prefers-reduced-motion: reduce) { .teller *, .npc-character, .npc-aura, .bagua-spinner { animation: none !important; } }
